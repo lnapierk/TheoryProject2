@@ -62,14 +62,14 @@ while len(todoStates) > 0:#while there are still unsearched states
         if l2s(v) not in doneStates:
             todoStates.append(v)#add these states
     dfa[l2s(nowState)] = temp #set the path dictionary as the value of the current state
-nf = open("dfa_of_"+sys.argv[1], 'w')
-nf.write(name+'\n')
+nf = open("dfa_of_"+sys.argv[1], 'w')#open file to write to
+nf.write(name+'\n')#write name to file
 nf.write(",".join(inputChars)+'\n')
 #newz = [l2s(x) for x in doneStates]
 nf.write(",".join(doneStates)+'\n')
 nf.write(l2s(esets[startState])+'\n')
-finalaccept = []
-for somestate in doneStates:
+finalaccept = []#the accept states for the dfa
+for somestate in doneStates:#finding those accept states
     for initials in acceptingStates:
         if initials in somestate:
             finalaccept.append(somestate)
@@ -78,4 +78,4 @@ nf.write(",".join(finalaccept)+'\n')
 for k, v in dfa.items():
     for l, w in v.items():
         nf.write(k+','+l+','+l2s(w)+'\n')
-nf.close()
+nf.close()#close file
