@@ -55,13 +55,15 @@ todoStates = [esets[startState]]#put the start state at the top of the stack to 
 doneStates = []#states that have already been searched from
 while len(todoStates) > 0:#while there are still unsearched states
     nowState = todoStates.pop()#get the top state from the stack
-    doneStates.append(l2s(nowState))#assign it as completed
+    if l2s(nowState) not in doneStates: 
+        doneStates.append(l2s(nowState))#assign it as completed
     temp = findNext(theNfa, nowState, inputChars, esets)#find the states it leads to
     for k, v in temp.items():
         if l2s(v) not in doneStates:
+            print l2s(v)
             todoStates.append(v)#add these states
     dfa[l2s(nowState)] = temp #set the path dictionary as the value of the current state
-
+print set(doneStates)
 nf = open("dfa_of_"+sys.argv[1], 'w')
 nf.write(name+'\n')
 nf.write(",".join(inputChars)+'\n')
