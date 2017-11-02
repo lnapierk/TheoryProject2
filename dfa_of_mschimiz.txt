@@ -1,0 +1,13 @@
+mschimiz adventure_2_DFA
+@,!
+q0q1,q0q1q2q4,q0q1q2q3q4,q0q1q4q5
+q0q1
+q0q1q2q4,q0q1q2q3q4,q0q1q4q5
+q0q1q4q5,!,q0q1q4q5
+q0q1q4q5,@,q0q1q2q3q4
+q0q1q2q3q4,!,q0q1q4q5
+q0q1q2q3q4,@,q0q1q2q3q4
+q0q1q2q4,!,q0q1q4q5
+q0q1q2q4,@,q0q1q2q3q4
+q0q1,!,q0q1q4q5
+q0q1,@,q0q1q2q4
