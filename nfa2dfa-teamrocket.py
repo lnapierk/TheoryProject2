@@ -11,9 +11,9 @@ def makeESetList(anNfa, astate, thelist):
 
 def l2s(thelist):#simple function to make lists into strings
     rStr = ''
-    thelist = list(set(thelist))
+    thelist = sorted(list(set(thelist)))
     for el in thelist:
-        rStr = rStr+'@@@'+el
+        rStr = rStr+el
     return rStr
 
 def findNext(anNfa, cSt, sChars, theES):
@@ -25,6 +25,8 @@ def findNext(anNfa, cSt, sChars, theES):
                 rDict[letter] = list(set(rDict[letter]+anNfa[mini][letter]))
         for tiny in rDict[letter]:
             rDict[letter] = list(set(rDict[letter]+ theES[tiny]))
+        if rDict[letter] == []:
+            del rDict[letter]
     return rDict
 
 theNfa = {}#create dictionary to represent NFA
@@ -60,4 +62,19 @@ while len(todoStates) > 0:
             todoStates.append(v)
     dfa[l2s(nowState)] = temp
 
-print dfa
+nf = open("dfa_of_"+sys.argv[1], 'w')
+nf.write(name+'\n')
+nf.write(",".join(inputChars)+'\n')
+newz = [l2s(x) for x in doneStates]
+nf.write(",".join(newz)+'\n')
+nf.write(l2s(esets[startState])+'\n')
+finalaccept = []
+for somestate in doneStates:
+    for initials in acceptingStates:
+        if initials in somestate:
+            finalaccept.append(l2s(somestate))
+nf.write(",".join(finalaccept)+'\n')
+for k, v in dfa.items():
+    for l, w in v.items():
+        nf.write(k+','+l+','+l2s(w)+'\n')
+nf.close()
