@@ -1,0 +1,1 @@
+My machine is an NFA that with five states and two input characters, a and b. It should accept any string that ends in a and reject any string that ends in b. As seen from my test string, our programs successfully interpreted and implemented this NFA.
