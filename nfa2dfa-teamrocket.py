@@ -9,6 +9,24 @@ def makeESetList(anNfa, astate, thelist):
                 retList = makeESetList(anNfa, nstate, list(set(thelist+retList)))#check for its epsilons
     return retList #return the list
 
+def l2s(thelist):#simple function to make lists into strings
+    rStr = ''
+    thelist = list(set(thelist))
+    for el in thelist:
+        rStr = rStr+'@@@'+el
+    return rStr
+
+def findNext(anNfa, cSt, sChars, theES):
+    rDict = {}
+    for letter in sChars:
+        rDict[letter] = []
+        for mini in cSt:
+            if letter in anNfa[mini]:
+                rDict[letter] = list(set(rDict[letter]+anNfa[mini][letter]))
+        for tiny in rDict[letter]:
+            rDict[letter] = list(set(rDict[letter]+ theES[tiny]))
+    return rDict
+
 theNfa = {}#create dictionary to represent NFA
 f = open(sys.argv[1], "r") #open file
 name = f.readline().strip()+"_2_DFA" #set the name of the DFA
@@ -29,3 +47,17 @@ esets = {} # initialize dictionary for the epsilon set things
 for state in stateListNfa:
     strtList = [state] # all esets contain the state itself
     esets[state] = makeESetList(theNfa, state, strtList)#map a state to the set it can reach
+
+dfa = {}
+todoStates = [esets[startState]]
+doneStates = []
+while len(todoStates) > 0:
+    nowState = todoStates.pop()
+    doneStates.append(nowState)
+    temp = findNext(theNfa, nowState, inputChars, esets)
+    for k, v in temp.items():
+        if v not in doneStates:
+            todoStates.append(v)
+    dfa[l2s(nowState)] = temp
+
+print dfa
