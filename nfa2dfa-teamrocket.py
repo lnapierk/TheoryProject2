@@ -65,8 +65,8 @@ while len(todoStates) > 0:#while there are still unsearched states
 nf = open("dfa_of_"+sys.argv[1], 'w')
 nf.write(name+'\n')
 nf.write(",".join(inputChars)+'\n')
-newz = [l2s(x) for x in doneStates]
-nf.write(",".join(newz)+'\n')
+#newz = [l2s(x) for x in doneStates]
+nf.write(",".join(doneStates)+'\n')
 nf.write(l2s(esets[startState])+'\n')
 finalaccept = []
 for somestate in doneStates:
