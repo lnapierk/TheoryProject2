@@ -4,7 +4,7 @@ import sys
 
 theNfa = {}#create dictionary to represent NFA
 f = open(sys.argv[1], "r") #open file
-name = f.readline(strip)+"_2_DFA" #set the name of the DFA
+name = f.readline().strip()+"_2_DFA" #set the name of the DFA
 inputChars = f.readline().strip().split(',') #get list of input characters
 stateListNfa = f.readline().strip().split(',')#get list of states
 startState = f.readline().strip()#get start state
