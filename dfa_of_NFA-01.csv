@@ -1,0 +1,11 @@
+NFA for strings ending with 01_to_DFA
+0,1
+q0,q0q1,q0q2
+q0
+q0q2
+q0,1,q0
+q0,0,q0q1
+q0q1,1,q0q2
+q0q1,0,q0q1
+q0q2,1,q0
+q0q2,0,q0q1

@@ -81,3 +81,5 @@ for k, v in dfa.items():
     for l, w in v.items():
         nf.write(k+','+l+','+l2s(w)+'\n')
 nf.close()#close file
+
+print("#nfa: " + str(len(stateListNfa)) + "  #dfa: " + str(len(doneStates)));
