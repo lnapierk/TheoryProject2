@@ -16,18 +16,18 @@ def l2s(thelist):#simple function to make lists into strings
         rStr = rStr+el
     return rStr
 
-def findNext(anNfa, cSt, sChars, theES):
-    rDict = {}
-    for letter in sChars:
-        rDict[letter] = []
-        for mini in cSt:
-            if letter in anNfa[mini]:
-                rDict[letter] = list(set(rDict[letter]+anNfa[mini][letter]))
-        for tiny in rDict[letter]:
+def findNext(anNfa, cSt, sChars, theES):#finds the paths to the next states from one state
+    rDict = {} #this will be returned
+    for letter in sChars: #for each character in the alphabet
+        rDict[letter] = []#create an empty list in the dictionary
+        for mini in cSt:#for each substate in the current state
+            if letter in anNfa[mini]:#if the character is in the substate's dictionary
+                rDict[letter] = list(set(rDict[letter]+anNfa[mini][letter]))#add the state it leads to
+        for tiny in rDict[letter]:#add all of the epsilon sets
             rDict[letter] = list(set(rDict[letter]+ theES[tiny]))
-        if rDict[letter] == []:
+        if rDict[letter] == []:#delete empty dictionaries
             del rDict[letter]
-    return rDict
+    return rDict#return the dictionary
 
 theNfa = {}#create dictionary to represent NFA
 f = open(sys.argv[1], "r") #open file
@@ -50,17 +50,17 @@ for state in stateListNfa:
     strtList = [state] # all esets contain the state itself
     esets[state] = makeESetList(theNfa, state, strtList)#map a state to the set it can reach
 
-dfa = {}
-todoStates = [esets[startState]]
-doneStates = []
-while len(todoStates) > 0:
-    nowState = todoStates.pop()
-    doneStates.append(nowState)
-    temp = findNext(theNfa, nowState, inputChars, esets)
+dfa = {}#initialize the dfa graph
+todoStates = [esets[startState]]#put the start state at the top of the stack to search from
+doneStates = []#states that have already been searched from
+while len(todoStates) > 0:#while there are still unsearched states
+    nowState = todoStates.pop()#get the top state from the stack
+    doneStates.append(l2s(nowState))#assign it as completed
+    temp = findNext(theNfa, nowState, inputChars, esets)#find the states it leads to
     for k, v in temp.items():
-        if v not in doneStates:
-            todoStates.append(v)
-    dfa[l2s(nowState)] = temp
+        if l2s(v) not in doneStates:
+            todoStates.append(v)#add these states
+    dfa[l2s(nowState)] = temp #set the path dictionary as the value of the current state
 
 nf = open("dfa_of_"+sys.argv[1], 'w')
 nf.write(name+'\n')
@@ -73,6 +73,7 @@ for somestate in doneStates:
     for initials in acceptingStates:
         if initials in somestate:
             finalaccept.append(l2s(somestate))
+            break
 nf.write(",".join(finalaccept)+'\n')
 for k, v in dfa.items():
     for l, w in v.items():
