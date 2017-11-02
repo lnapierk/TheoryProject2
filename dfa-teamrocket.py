@@ -31,7 +31,11 @@ def readStrings(filename, machine):
         resetDFA(machine)
         currentString = line.strip()
         print("String: {}").format(currentString)
-        print(processString(currentString, machine))
+        start = time.time()
+        output = processString(currentString, machine)
+        end = time.time()
+        runtime = end - start
+        print(output + "\nRuntime: " + str(1000000*runtime) + " microseconds")
         print('\n')
 
 def processString(string, machine):
