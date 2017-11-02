@@ -31,7 +31,7 @@ def findNext(anNfa, cSt, sChars, theES):#finds the paths to the next states from
 
 theNfa = {}#create dictionary to represent NFA
 f = open(sys.argv[1], "r") #open file
-name = f.readline().strip()+"_2_DFA" #set the name of the DFA
+name = f.readline().strip()+"_to_DFA" #set the name of the DFA
 inputChars = f.readline().strip().split(',') #get list of input characters
 stateListNfa = f.readline().strip().split(',')#get list of states
 startState = f.readline().strip()#get start state
@@ -62,7 +62,9 @@ while len(todoStates) > 0:#while there are still unsearched states
         if l2s(v) not in doneStates:
             todoStates.append(v)#add these states
     dfa[l2s(nowState)] = temp #set the path dictionary as the value of the current state
-nf = open("dfa_of_"+sys.argv[1], 'w')#open file to write to
+ofname = sys.argv[1].split('.')
+nfname = "dfa_of_"+ofname[0]+".csv"
+nf = open(nfname, 'w')#open file to write to
 nf.write(name+'\n')#write name to file
 nf.write(",".join(inputChars)+'\n')
 #newz = [l2s(x) for x in doneStates]
