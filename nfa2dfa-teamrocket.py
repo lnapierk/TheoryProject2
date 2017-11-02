@@ -72,7 +72,7 @@ finalaccept = []
 for somestate in doneStates:
     for initials in acceptingStates:
         if initials in somestate:
-            finalaccept.append(l2s(somestate))
+            finalaccept.append(somestate)
             break
 nf.write(",".join(finalaccept)+'\n')
 for k, v in dfa.items():
