@@ -36,7 +36,6 @@ def readStrings(filename, machine):
         end = time.time()
         runtime = end - start
         print(output + "\nRuntime: " + str(1000000*runtime) + " microseconds")
-        print('\n')
 
 def processString(string, machine):
     for i,c in enumerate(string):
@@ -57,5 +56,6 @@ def processString(string, machine):
 
 
 args = sys.argv[1:]
-dfa = readDFA(args[0])
+dfa = readDFA(args[0
+print('\n')
 readStrings(args[1], dfa)
